@@ -135,6 +135,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Recorder
 
+# AOSP apps
+PRODUCT_PACKAGES += \
+    ExactCalculator \
+    DeskClock \
+    LatinIME
+
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED := false
 ifeq ($(TARGET_GAPPS_ARCH),arm64)
@@ -152,9 +158,6 @@ include vendor/aosp/config/branding.mk
 
 # OTA
 include vendor/aosp/config/ota.mk
-
-# GApps
-include vendor/gapps/config.mk
 
 # Pixel Style
 include vendor/pixelstyle/config.mk
