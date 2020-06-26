@@ -139,7 +139,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ExactCalculator \
     DeskClock \
-    LatinIME
+    LatinIME \
+    messaging \
+    Contacts \
+    Dialer 
+    
 
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED := false
