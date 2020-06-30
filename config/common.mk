@@ -135,6 +135,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Recorder
 
+# AOSP apps
+PRODUCT_PACKAGES += \
+    ExactCalculator \
+    DeskClock \
+    LatinIME \
+    messaging \
+    Contacts \
+    Dialer 
+
 # Face Unlock
 ifeq ($(CUSTOM_BUILD_TYPE), OFFICIAL)
 TARGET_FACE_UNLOCK_SUPPORTED := false
@@ -154,9 +163,6 @@ include vendor/aosp/config/branding.mk
 
 # OTA
 include vendor/aosp/config/ota.mk
-
-# GApps
-include vendor/gapps/config.mk
 
 # Pixel Style
 include vendor/pixelstyle/config.mk
