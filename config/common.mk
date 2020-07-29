@@ -142,7 +142,8 @@ PRODUCT_PACKAGES += \
     LatinIME \
     messaging \
     Contacts \
-    Dialer 
+    Dialer \
+    ThemePicker
 
 # Face Unlock
 ifeq ($(CUSTOM_BUILD_TYPE), OFFICIAL)
