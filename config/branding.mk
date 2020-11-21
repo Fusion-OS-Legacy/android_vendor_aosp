@@ -27,5 +27,3 @@ CUSTOM_PROPERTIES := \
     org.fusion.build_date=$(CUSTOM_BUILD_DATE) \
     org.fusion.build_date_utc=$(CUSTOM_BUILD_DATE_UTC) \
     org.fusion.build_type=$(CUSTOM_BUILD_TYPE)
-
-

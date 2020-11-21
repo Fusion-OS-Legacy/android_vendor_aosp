@@ -1,4 +1,4 @@
-PRODUCT_BRAND ?= PixelExperience
+PRODUCT_BRAND ?= FusionOS
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
@@ -30,11 +30,19 @@ else
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
 
-# Backup Tool
+# AOSP recovery flashing
+ifeq ($(TARGET_USES_AOSP_RECOVERY),true)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.sys.recovery_update=true
+endif
+
+# Binaries for file-based incremental ota
 PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/aosp/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/aosp/prebuilt/common/bin/50-base.sh:system/addon.d/50-base.sh
+    vendor/aosp/prebuilt/common/bin/busybox:install/bin/busybox \
+    vendor/aosp/prebuilt/common/bin/mount_all.sh:install/bin/mount_all.sh \
+    vendor/aosp/prebuilt/common/bin/mount_functions.sh:install/bin/mount_functions.sh \
+    vendor/aosp/prebuilt/common/bin/setup_busybox.sh:install/bin/setup_busybox.sh \
+    vendor/aosp/prebuilt/common/bin/umount_all.sh:install/bin/umount_all.sh
 
 # OTA
 ifneq ($(TARGET_BUILD_VARIANT),user)
@@ -42,16 +50,10 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.ota.allow_downgrade=true
 endif
 
-ifneq ($(AB_OTA_PARTITIONS),)
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
-    vendor/aosp/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
-    vendor/aosp/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
-endif
-
 # Some permissions
 PRODUCT_COPY_FILES += \
-    vendor/aosp/config/permissions/backup.xml:system/etc/sysconfig/backup.xml
+    vendor/aosp/config/permissions/backup.xml:system/etc/sysconfig/backup.xml \
+    vendor/aosp/config/permissions/privapp-permissions-lineagehw.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-lineagehw.xml
 
 # Copy all custom init rc files
 $(foreach f,$(wildcard vendor/aosp/prebuilt/common/etc/init/*.rc),\
@@ -112,6 +114,10 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/aosp/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/aosp/overlay/common
+
+# TouchGestures
+PRODUCT_PACKAGES += \
+    TouchGestures
 
 # PixelSetupWizard overlay
 PRODUCT_PACKAGES += \
